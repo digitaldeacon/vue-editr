@@ -7,6 +7,7 @@ app.config.performance = true;
 
 app.use(VueEditr, {
   hideModules: [''],
+  addModules: ['headings','orderedList','unorderedList'],
   iconOverrides: {
     bold: '<i class="mdi mdi-format-bold vue-wysiwyg-icon"></i>',
     italic: '<i class="mdi mdi-format-italic vue-wysiwyg-icon"></i>',
@@ -14,7 +15,7 @@ app.use(VueEditr, {
     orderedList: '<i class="mdi mdi-format-list-numbered vue-wysiwyg-icon"></i>',
     unorderedList:
       '<i class="mdi mdi-format-list-bulleted vue-wysiwyg-icon"></i>',
-    removeFormat: '<i class="mdi mdi-format-clear vue-wysiwyg-icon"></i>'
+    removeFormat: '<i class="mdi mdi-format-clear vue-wysiwyg-icon"></i>',
   },
   plainTextOnPaste: true,
   locale: 'de',

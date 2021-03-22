@@ -11,7 +11,9 @@ export default defineComponent({
   <div id="app">
     <div>
       <h4>First</h4>
-      <vue-editr :customOptions="{addModules:['headings', 'orderedList', 'unorderedList']}" />
+      <vue-editr :customOptions="{
+        hideModules:['orderedList','unorderedList']
+        }" />
     </div>
     <div>
       <h4>Second</h4>
