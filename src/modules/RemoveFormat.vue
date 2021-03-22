@@ -5,6 +5,12 @@ import {ModuleEvent} from '@/composables/interfaces';
 export default /*#__PURE__*/ defineComponent({
   name: 'RemoveFormat',
   emits: ['handle'],
+  props: {
+    desc: {
+      type: String,
+      default: '',
+    },
+  },
   setup(_, {emit}) {
     const event: ModuleEvent = {
       origin: 'Remove Format Button',
@@ -21,7 +27,7 @@ export default /*#__PURE__*/ defineComponent({
 });
 </script>
 <template>
-  <a @click="handle">
+  <a @click="handle" :alt="desc" :aria-label="desc">
     <svg
       width="1792"
       height="1792"

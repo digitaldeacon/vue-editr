@@ -3,14 +3,18 @@ interface ImageObject {
   dropzoneOptions: Record<string, any>;
 }
 
+export interface ModuleObject {
+  [key: string]: Record<string, any>;
+}
+
 export interface EditrOptions {
   image?: ImageObject;
   hideModules?: string[];
   addModules?: string[];
   maxHeight?: number;
   locale?: string;
-  localeStrings?: Record<string, string>;
-  iconOverrides?: Record<string, string>;
+  localeStrings?: ModuleObject;
+  iconOverrides?: ModuleObject;
   plainTextOnPaste: boolean;
   paragraphSeparator: string;
 }
@@ -18,10 +22,6 @@ export interface EditrOptions {
 export interface EditrData {
   selection?: Selection;
   options: EditrOptions;
-}
-
-export interface ModuleObject {
-  [key: string]: Record<string, any>;
 }
 
 export interface ModuleEvent {
@@ -34,6 +34,7 @@ export interface ButtonProps {
   closeMenu: boolean;
 }
 
+//** This is needed because we are passing emit() around. Remove this when exported by Vue or we switch to a store * /
 type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
   k: infer I
 ) => void

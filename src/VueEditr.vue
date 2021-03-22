@@ -7,7 +7,6 @@ import {
   onUnmounted,
   inject,
 } from 'vue';
-//import {debounce} from 'ts-debounce';
 import {EditrOptions, ModuleEvent} from '@/composables/interfaces';
 import loadModules from '@/composables/useLoadModules';
 import {
@@ -15,7 +14,6 @@ import {
   clearSelection,
   restoreSelection,
 } from '@/composables/useSelection';
-
 import onHandlers from '@/composables/useHandlers';
 
 const defaultModules = ['bold', 'italic', 'underline', 'removeFormat'];
@@ -78,17 +76,26 @@ export default /*#__PURE__*/ defineComponent({
       emitChange();
     };
 
-    const moduleTitle = (module: string): string => {
+    const moduleMeta = (module: string): Record<string, string> => {
       let title = '';
+      let desc = '';
       if (options.localeStrings && options.localeStrings[module]) {
-        title = options.localeStrings[module];
+        title = options.localeStrings[module].title
+          ? options.localeStrings[module].title
+          : options.localeStrings[module];
+        desc = options.localeStrings[module].title
+          ? options.localeStrings[module].desc
+          : title;
       } else {
         console.log(
           '[VueEditr] WARNING:',
           `No translation key exists for module ${module} and locale ${options.locale}`
         );
       }
-      return title;
+      return {
+        title: title,
+        desc: desc,
+      };
     };
 
     onMounted(() => {
@@ -111,7 +118,7 @@ export default /*#__PURE__*/ defineComponent({
       onFocus,
       onInput,
       handle,
-      moduleTitle,
+      moduleMeta,
       closeAllMenus,
     };
   },
@@ -127,7 +134,8 @@ export default /*#__PURE__*/ defineComponent({
           :key="key"
           :is="module"
           :closeMenu="closeAllMenus"
-          :title="moduleTitle(key)"
+          :title="moduleMeta(key).title"
+          :desc="moduleMeta(key).desc"
           @handle="handle"
         ></component>
       </keep-alive>
