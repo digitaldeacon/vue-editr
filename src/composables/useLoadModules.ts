@@ -3,7 +3,7 @@ import {ModuleObject} from './interfaces';
 import {defineAsyncComponent} from 'vue';
 //import mitt from 'mitt';
 
-export default function useLoadModules(
+export default function loadModules(
   modules: Array<string>,
   hideModules?: Array<string>,
   addModules?: Array<string>

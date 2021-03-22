@@ -1,6 +1,6 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {ModuleEvent} from '../composables/interfaces';
+import {ModuleEvent} from '@/composables/interfaces';
 
 export default /*#__PURE__*/ defineComponent({
   name: 'ModuleBold',

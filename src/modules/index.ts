@@ -27,5 +27,29 @@ const registrar: RegistrarObject = {
     title: 'Headings',
     desc: 'Select different types of headings (h1-h6)',
   },
+  underline: {
+    name: 'ModuleUnderline',
+    file: 'Underline.vue',
+    title: 'Underline',
+    desc: 'Underline selected text',
+  },
+  orderedList: {
+    name: 'ModuleOrderedList',
+    file: 'ListOrdered.vue',
+    title: 'Ordered List',
+    desc: 'Ordered List (1, 2, 3)',
+  },
+  unorderedList: {
+    name: 'ModuleUnorderedList',
+    file: 'ListUnordered.vue',
+    title: 'Unordered List',
+    desc: 'Bullet List',
+  },
+  removeFormat: {
+    name: 'ModuleRemoveFormat',
+    file: 'RemoveFormat.vue',
+    title: 'Remove Format',
+    desc: 'Remove formatting.\nClears headings, bold, italic, underlined text, etc.',
+  },
 };
 export default registrar;

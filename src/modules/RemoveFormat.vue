@@ -3,12 +3,12 @@ import {defineComponent} from 'vue';
 import {ModuleEvent} from '@/composables/interfaces';
 
 export default /*#__PURE__*/ defineComponent({
-  name: 'ModuleBold',
+  name: 'RemoveFormat',
   emits: ['handle'],
   setup(_, {emit}) {
     const event: ModuleEvent = {
-      origin: 'Italic Button',
-      command: 'italic',
+      origin: 'Remove Format Button',
+      command: 'removeFormat',
     };
     const handle = () => {
       emit('handle', event);
@@ -29,7 +29,7 @@ export default /*#__PURE__*/ defineComponent({
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M384 1662l17-85q6-2 81.5-21.5t111.5-37.5q28-35 41-101 1-7 62-289t114-543.5 52-296.5v-25q-24-13-54.5-18.5t-69.5-8-58-5.5l19-103q33 2 120 6.5t149.5 7 120.5 2.5q48 0 98.5-2.5t121-7 98.5-6.5q-5 39-19 89-30 10-101.5 28.5t-108.5 33.5q-8 19-14 42.5t-9 40-7.5 45.5-6.5 42q-27 148-87.5 419.5t-77.5 355.5q-2 9-13 58t-20 90-16 83.5-6 57.5l1 18q17 4 185 31-3 44-16 99-11 0-32.5 1.5t-32.5 1.5q-29 0-87-10t-86-10q-138-2-206-2-51 0-143 9t-121 11z"
+        d="M832 1408l336-384h-768l-336 384h768zm1013-1077q15 34 9.5 71.5t-30.5 65.5l-896 1024q-38 44-96 44h-768q-38 0-69.5-20.5t-47.5-54.5q-15-34-9.5-71.5t30.5-65.5l896-1024q38-44 96-44h768q38 0 69.5 20.5t47.5 54.5z"
       />
     </svg>
   </a>

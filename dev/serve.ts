@@ -17,7 +17,7 @@ app.use(VueEditr, {
     removeFormat: '<i class="mdi mdi-format-clear vue-wysiwyg-icon"></i>'
   },
   plainTextOnPaste: true,
-  locale: 'ru',
+  locale: 'de',
 });
 
 app.mount('#app');

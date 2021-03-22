@@ -7,16 +7,18 @@ import {
   onUnmounted,
   inject,
 } from 'vue';
-import {debounce} from 'ts-debounce';
+//import {debounce} from 'ts-debounce';
 import {EditrOptions, ModuleEvent} from '@/composables/interfaces';
-import useLoadModules from '@/composables/useLoadModules';
+import loadModules from '@/composables/useLoadModules';
 import {
   saveSelection,
   clearSelection,
   restoreSelection,
-} from '@/composables/selection';
+} from '@/composables/useSelection';
 
-const defaultModules = ['bold', 'italic'];
+import onHandlers from '@/composables/useHandlers';
+
+const defaultModules = ['bold', 'italic', 'underline', 'removeFormat'];
 
 export default /*#__PURE__*/ defineComponent({
   name: 'VueEditr',
@@ -50,52 +52,43 @@ export default /*#__PURE__*/ defineComponent({
       defaultOptions = {...defaultOptions, ...$setupOptions};
     }
     const options: EditrOptions = props.customOptions
-      ? {...props.customOptions, ...defaultOptions}
+      ? {...defaultOptions, ...props.customOptions}
       : defaultOptions;
 
-    console.log('Custom Options', options);
-    const editrModules = useLoadModules(
+    const editrModules = loadModules(
       defaultModules,
       options?.hideModules,
       options?.addModules
     );
 
-    console.log('attributes', options);
+    const {onPaste, onFocus, onInput, emitChange} = onHandlers(content, emit);
 
-    /*const innerHTML = computed({
-      get(): string {
-        const elContent: HTMLElement = (content.value as unknown) as HTMLElement;
-        return elContent.innerHTML;
-      },
-      set(html: string) {
-        content.value = html;
-      },
-    });*/
-    //const innerHTML = ((content.value as unknown) as HTMLElement).innerHTML;
-
-    const emitChange = () => {
-      emit('html', content.value?.innerHTML);
-      emit('change', content.value?.innerHTML);
+    const onDocumentClick = () => {
+      closeAllMenus.value = !closeAllMenus.value;
     };
-    const onContentBlur = () => {
+    const onContentBlur = (): void => {
       range = saveSelection();
       emit('blur', content.value?.innerHTML);
     };
-    const onPaste = (e: ClipboardEvent) => {
-      e.preventDefault();
-      const text = e.clipboardData?.getData('text/plain');
-      document.execCommand('insertHTML', false, text);
+
+    const handle = (event: ModuleEvent) => {
+      restoreSelection(range);
+      document.execCommand(event.command, false, event?.props);
+      clearSelection();
+      emitChange();
     };
-    const onFocus = () => {
-      document.execCommand(
-        'defaultParagraphSeparator',
-        false,
-        options.paragraphSeparator
-      );
-    };
-    const onInput = debounce(emitChange, 300);
-    const onDocumentClick = () => {
-      closeAllMenus.value = !closeAllMenus.value;
+
+    const moduleTitle = (module: string): string => {
+      let title = '';
+      if (options.localeStrings && options.localeStrings[module]) {
+        title = options.localeStrings[module];
+      } else {
+        console.log(
+          '[VueEditr] WARNING:',
+          `No translation key exists for module ${module} and locale ${options.locale}`
+        );
+      }
+      return title;
     };
 
     onMounted(() => {
@@ -111,31 +104,10 @@ export default /*#__PURE__*/ defineComponent({
       }
     });
 
-    const handle = (event: ModuleEvent) => {
-      restoreSelection(range);
-      document.execCommand(event.command, false, event?.props);
-      clearSelection();
-      emitChange();
-    };
-
-    function moduleTitle(module: string): string {
-      let title = '';
-      if (options.localeStrings && options.localeStrings[module]) {
-        title = options.localeStrings[module];
-      } else {
-        console.log(
-          '[VueEditr] WARNING:',
-          `No translation key exists for module ${module} and locale ${options.locale}`
-        );
-      }
-      return title;
-    }
-
     return {
       modules: computed(() => editrModules),
       content,
       onContentBlur,
-      onPaste,
       onFocus,
       onInput,
       handle,
@@ -148,7 +120,7 @@ export default /*#__PURE__*/ defineComponent({
 
 <template>
   <div class="editr">
-    <menu class="editr--toolbar">
+    <nav class="editr--toolbar">
       <keep-alive>
         <component
           v-for="(module, key) in modules"
@@ -159,7 +131,7 @@ export default /*#__PURE__*/ defineComponent({
           @handle="handle"
         ></component>
       </keep-alive>
-    </menu>
+    </nav>
     <div
       ref="content"
       class="editr--body"

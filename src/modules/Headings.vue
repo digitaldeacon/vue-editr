@@ -1,7 +1,7 @@
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {ModuleEvent} from '../composables/interfaces';
-import useButtonFunctions from '../composables/useButtonFunctions';
+import {ModuleEvent} from '@/composables/interfaces';
+import useButtonFunctions from '@/composables/useButtonFunctions';
 
 export default /*#__PURE__*/ defineComponent({
   name: 'ModuleHeadings',
