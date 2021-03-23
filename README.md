@@ -1,6 +1,8 @@
 # VueEditr
 A simple WYSIWYG editor for Vue 3. 
 
+NOTE: This is **still WIP***!
+
 The code base is an upgrade of the vue-wysiwyg editor by chmln. The upgarde was done to support Vue 3 and was written in Typescript.
 
 ## Usage
